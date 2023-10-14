@@ -1,7 +1,7 @@
 <template>
     <section class="agents">
         <div class="agents__wrapper p-4">
-            <div class="table-title d-flex justify-content-between">
+            <div class="table-title d-flex justify-content-between mb-3">
                 <h3 class="d-inline-flex">Таблица агентов</h3>
                 <form class="w-50 me-3" role="search">
                     <input v-model="search" type="search" class="form-control" placeholder="Поиск по агентам" aria-label="Search">
@@ -12,7 +12,7 @@
                     Добавить агента
                 </button>
             </div>
-            <table class="table table-striped">
+            <table class="table table-striped shadow-sm">
                 <thead>
                     <tr>
                         <th scope="col" class="table__item">id</th>
@@ -20,6 +20,7 @@
                         <th scope="col" class="table__item">Фамилия</th>
                         <th scope="col" class="table__item">Отчество</th>
                         <th scope="col" class="table__item">Доля от комиссии</th>
+                        <th scope="col" class="table__item">Действия</th>
                     </tr>
                 </thead>
                 <tbody class="table-hover">
@@ -53,6 +54,7 @@
 
 <script>
 import { useAgentsStore } from '../store/agents'
+import levenshteinDistance from '../levenshtein.js'
 
 import ModalCreateAgent from "../components/ModalCreateAgent.vue";
 
@@ -77,7 +79,7 @@ export default {
                     // return searchWords.every(word => {
                     //     return this.levenshteinDistance(name, word) <= 3
                     // })
-                    return this.levenshteinDistance(name, searchWords) <= 3
+                    return levenshteinDistance(name, searchWords) <= 3
                 })
             }
             return useAgentsStore().agents
@@ -99,27 +101,6 @@ export default {
             this.editId = -1;
             this.agents = dataAgents;
         },
-        levenshteinDistance(str1, str2) {
-            const track = Array(str2.length + 1).fill(null).map(() =>
-                Array(str1.length + 1).fill(null));
-            for (let i = 0; i <= str1.length; i += 1) {
-                track[0][i] = i;
-            }
-            for (let j = 0; j <= str2.length; j += 1) {
-                track[j][0] = j;
-            }
-            for (let j = 1; j <= str2.length; j += 1) {
-                for (let i = 1; i <= str1.length; i += 1) {
-                    const indicator = str1[i - 1] === str2[j - 1] ? 0 : 1;
-                    track[j][i] = Math.min(
-                        track[j][i - 1] + 1,
-                        track[j - 1][i] + 1,
-                        track[j - 1][i - 1] + indicator,
-                    );
-                }
-            }
-            return track[str2.length][str1.length];
-        }
     },
 }
 </script>

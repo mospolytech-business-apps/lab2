@@ -1,0 +1,161 @@
+[
+    {
+      "Id": 1,
+      "Address_City": "Тюмень",
+      "Address_Street": "Энергостроителей",
+      "Address_House": 25,
+      "Address_Number": 12,
+      "Coordinate_latitude": 0,
+      "Coordinate_longitude": 0,
+      "TotalArea": 41.7,
+      "Rooms": 1,
+      "Floor": 3
+    },
+    {
+      "Id": 2,
+      "Address_City": "Тюмень",
+      "Address_Street": "Елизарова",
+      "Address_House": 8,
+      "Address_Number": 44,
+      "Coordinate_latitude": 56.86,
+      "Coordinate_longitude": 66.02,
+      "TotalArea": 105,
+      "Rooms": 3,
+      "Floor": 5
+    },
+    {
+      "Id": 3,
+      "Address_City": "Тюмень",
+      "Address_Street": "Московский тракт",
+      "Address_House": 139,
+      "Address_Number": 6,
+      "Coordinate_latitude": 0,
+      "Coordinate_longitude": 0,
+      "TotalArea": 62,
+      "Rooms": 3,
+      "Floor": 2
+    },
+    {
+      "Id": 4,
+      "Address_City": "Тюмень",
+      "Address_Street": "Широтная",
+      "Address_House": 189,
+      "Address_Number": 5,
+      "Coordinate_latitude": 0,
+      "Coordinate_longitude": 0,
+      "TotalArea": 50,
+      "Rooms": 2,
+      "Floor": 7
+    },
+    {
+      "Id": 5,
+      "Address_City": "Тюмень",
+      "Address_Street": "Пролетарская",
+      "Address_House": 110,
+      "Address_Number": 99,
+      "Coordinate_latitude": 0,
+      "Coordinate_longitude": 0,
+      "TotalArea": 51.7,
+      "Rooms": 2,
+      "Floor": 2
+    },
+    {
+      "Id": 6,
+      "Address_City": "Тюмень",
+      "Address_Street": "Тараскульская",
+      "Address_House": 189,
+      "Address_Number": 1,
+      "Coordinate_latitude": 56.8549652556,
+      "Coordinate_longitude": 66.014590741,
+      "TotalArea": 44,
+      "Rooms": 2,
+      "Floor": 1
+    },
+    {
+      "Id": 7,
+      "Address_City": "Тюмень",
+      "Address_Street": "Парфенова",
+      "Address_House": 22,
+      "Address_Number": 1,
+      "Coordinate_latitude": 65.81,
+      "Coordinate_longitude": 56.92,
+      "TotalArea": 43.1,
+      "Rooms": 1,
+      "Floor": 5
+    },
+    {
+      "Id": 8,
+      "Address_City": "Тюмень",
+      "Address_Street": "Республики",
+      "Address_House": 144,
+      "Address_Number": 16,
+      "Coordinate_latitude": 0,
+      "Coordinate_longitude": 0,
+      "TotalArea": 92,
+      "Rooms": 3,
+      "Floor": 1
+    },
+    {
+        "Id": 9,
+        "Address_City": "Тюмень",
+        "Address_Street": "1-й Заречный",
+        "Address_House": 25,
+        "Address_Number": "",
+        "Coordinate_latitude": 0,
+        "Coordinate_longitude": 0,
+        "TotalFloors": 2,
+        "TotalArea": 84.4
+      },
+      {
+        "Id": 10,
+        "Address_City": "Тюмень",
+        "Address_Street": "Ялyтopoвcкий тpaкт",
+        "Address_House": null,
+        "Address_Number": "",
+        "Coordinate_latitude": 0,
+        "Coordinate_longitude": 0,
+        "TotalFloors": 3,
+        "TotalArea": 130
+      },
+      {
+        "Id": 11,
+        "Address_City": "Тюмень",
+        "Address_Street": "Березняковский п",
+        "Address_House": null,
+        "Address_Number": "",
+        "Coordinate_latitude": 0,
+        "Coordinate_longitude": 0,
+        "TotalFloors": 1,
+        "TotalArea": 120
+      },
+      {
+        "Id": 12,
+        "Address_City": "Тюмень",
+        "Address_Street": "Луговое",
+        "Address_House": "",
+        "Address_Number": "",
+        "Coordinate_latitude": 0,
+        "Coordinate_longitude": 0,
+        "TotalArea": 20.3
+      },
+      {
+        "Id": 13,
+        "Address_City": "Тюмень",
+        "Address_Street": "Алексеевский хутор",
+        "Address_House": "",
+        "Address_Number": "",
+        "Coordinate_latitude": 0,
+        "Coordinate_longitude": 0,
+        "TotalArea": 12.45
+      },
+      {
+        "Id": 14,
+        "Address_City": "Тюмень",
+        "Address_Street": "Суходольский мкр",
+        "Address_House": "",
+        "Address_Number": "",
+        "Coordinate_latitude": 0,
+        "Coordinate_longitude": 0,
+        "TotalArea": 12
+      }
+   ]
