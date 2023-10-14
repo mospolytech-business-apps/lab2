@@ -1,0 +1,157 @@
+<template>
+    <section class="agents">
+        <div class="agents__wrapper p-4">
+            <div class="table-title d-flex justify-content-between">
+                <h3 class="d-inline-flex">Таблица агентов</h3>
+                <form class="w-50 me-3" role="search">
+                    <input v-model="search" type="search" class="form-control" placeholder="Поиск по агентам" aria-label="Search">
+                </form>
+                <button type="button" @click="showModal = true"
+                    class="d-inline-flex align-items-center btn btn-primary px-4 rounded-pill" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">
+                    Добавить агента
+                </button>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col" class="table__item">id</th>
+                        <th scope="col" class="table__item">Имя</th>
+                        <th scope="col" class="table__item">Фамилия</th>
+                        <th scope="col" class="table__item">Отчество</th>
+                        <th scope="col" class="table__item">Доля от комиссии</th>
+                    </tr>
+                </thead>
+                <tbody class="table-hover">
+                    <tr v-for="agent in filteredAgents" :key="agent.Id" :class="{'table-info': agent.Id==editId}">
+                        <th scope="row" class="table__item"><input class="table__input form-control" :disabled="this.editId!==agent.Id" v-model="agent.Id" /></th>
+                        <td class="table__item"><input class="table__input form-control" :disabled="this.editId!==agent.Id" v-model="agent.FirstName" /></td>
+                        <td class="table__item"><input class="table__input form-control" :disabled="this.editId!==agent.Id" v-model="agent.MiddleName" /></td>
+                        <td class="table__item"><input class="table__input form-control" :disabled="this.editId!==agent.Id" v-model="agent.LastName" /></td>
+                        <td class="table__item"><input class="table__input form-control" :disabled="this.editId!==agent.Id" v-model="agent.DealShare"/></td>
+                        <td v-if="agent.Id!==editId">
+                            <div class="btn-group">
+                                <button class="btn btn-outline-primary" @click="editById(agent.Id)">
+                                    Изменить
+                                </button>
+                                <button class="btn btn-outline-danger" @click="removeById(agent.Id)">Удалить</button>
+                            </div>
+                        </td>
+                        <td v-else>
+                            <div class="btn-group">
+                                <button class="btn btn-success" @click="saveChanges(agent.Id)">Сохранить</button>
+                                <button class="btn btn-warning" @click="cancelChanges(agent.Id)">Отменить</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <ModalCreateAgent v-if="showModal" @close="showModal = false"/>
+    </section>
+</template>
+
+<script>
+import { useAgentsStore } from '../store/agents'
+
+import ModalCreateAgent from "../components/ModalCreateAgent.vue";
+
+export default {
+    components: {
+        ModalCreateAgent,
+    },
+    data() {
+        return {
+            editId: -1,
+            showModal: false,
+            search: '',
+        }
+    },
+    computed: {
+        filteredAgents() {
+            if (this.search !== '') {
+                return useAgentsStore().agents.filter(agent => {
+                    const name = `${agent.FirstName} ${agent.MiddleName} ${agent.LastName}`
+                    // const searchWords = this.search.split(' ')
+                    const searchWords = this.search
+                    // return searchWords.every(word => {
+                    //     return this.levenshteinDistance(name, word) <= 3
+                    // })
+                    return this.levenshteinDistance(name, searchWords) <= 3
+                })
+            }
+            return useAgentsStore().agents
+        }
+    },
+    methods: {
+        removeById(id) {
+            useAgentsStore().removeAgent(id);
+        },
+        editById(id) {
+            this.editId = id;
+        },
+        saveChanges(id) {
+            // const index = this.agents.findIndex(c => c.id === agent.id);
+            // this.agents.splice(index, 1, updatedagent);
+            this.editId = -1;
+        },
+        cancelChanges(id) {
+            this.editId = -1;
+            this.agents = dataAgents;
+        },
+        levenshteinDistance(str1, str2) {
+            const track = Array(str2.length + 1).fill(null).map(() =>
+                Array(str1.length + 1).fill(null));
+            for (let i = 0; i <= str1.length; i += 1) {
+                track[0][i] = i;
+            }
+            for (let j = 0; j <= str2.length; j += 1) {
+                track[j][0] = j;
+            }
+            for (let j = 1; j <= str2.length; j += 1) {
+                for (let i = 1; i <= str1.length; i += 1) {
+                    const indicator = str1[i - 1] === str2[j - 1] ? 0 : 1;
+                    track[j][i] = Math.min(
+                        track[j][i - 1] + 1,
+                        track[j - 1][i] + 1,
+                        track[j - 1][i - 1] + indicator,
+                    );
+                }
+            }
+            return track[str2.length][str1.length];
+        }
+    },
+}
+</script>
+
+<style lang="scss" scoped>
+.agents__wrapper {
+    padding: 0 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+.table__item {
+    font-size: 18px;
+
+}
+.table__input {
+    font-size: 18px;
+    border: 1px solid black;
+    &:disabled {
+        border: 1px solid transparent;
+        color: black;
+        background: none;
+    }
+}
+.table__button {
+    cursor: pointer;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 12px;
+    width: 124px;
+    text-align: center;
+    margin-right: 2px;
+    background-color: rgb(169, 169, 169);
+}
+</style>

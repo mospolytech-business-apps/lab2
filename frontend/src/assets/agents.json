@@ -1,0 +1,79 @@
+[
+    {
+      "Id": 1,
+      "FirstName": "Фахрутдинов",
+      "MiddleName": "Роман",
+      "LastName": "Рубинович",
+      "DealShare": 20
+    },
+    {
+      "Id": 4,
+      "FirstName": "Устинов",
+      "MiddleName": "Максим",
+      "LastName": "Алексеевич",
+      "DealShare": 40
+    },
+    {
+      "Id": 7,
+      "FirstName": "Сысоева",
+      "MiddleName": "Людмила",
+      "LastName": "Валентиновна",
+      "DealShare": 45
+    },
+    {
+      "Id": 9,
+      "FirstName": "Додонов",
+      "MiddleName": "Илья",
+      "LastName": "Геннадьевич",
+      "DealShare": 45
+    },
+    {
+      "Id": 11,
+      "FirstName": "Мухтаруллин",
+      "MiddleName": "Руслан",
+      "LastName": "Расыхович",
+      "DealShare": 45
+    },
+    {
+      "Id": 13,
+      "FirstName": "Мосеева",
+      "MiddleName": "Любовь",
+      "LastName": "Александровна",
+      "DealShare": 45
+    },
+    {
+      "Id": 15,
+      "FirstName": "Киселев",
+      "MiddleName": "Алексей",
+      "LastName": "Геннадьевич",
+      "DealShare": 45
+    },
+    {
+      "Id": 19,
+      "FirstName": "Клюйков",
+      "MiddleName": "Евгений",
+      "LastName": "Николаевич",
+      "DealShare": 50
+    },
+    {
+      "Id": 24,
+      "FirstName": "Жданова",
+      "MiddleName": "Галина",
+      "LastName": "Николаевна",
+      "DealShare": 45
+    },
+    {
+      "Id": 34,
+      "FirstName": "Басырова",
+      "MiddleName": "Елена",
+      "LastName": "Азатовна",
+      "DealShare": 45
+    },
+    {
+      "Id": 37,
+      "FirstName": "Швецов",
+      "MiddleName": "Виталий",
+      "LastName": "Олегович",
+      "DealShare": 45
+    }
+   ]

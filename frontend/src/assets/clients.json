@@ -1,0 +1,210 @@
+[
+    {
+      "Id": 2,
+      "FirstName": "Семенов",
+      "MiddleName": "Евгений ",
+      "LastName": "Николаевич",
+      "Phone": "32-25-55",
+      "Email": ""
+    },
+    {
+      "Id": 3,
+      "FirstName": "Денисова",
+      "MiddleName": "Олеся",
+      "LastName": "Леонидовна",
+      "Phone": "",
+      "Email": "dummy@email.ru"
+    },
+    {
+      "Id": 5,
+      "FirstName": "Сафронов",
+      "MiddleName": "Алексей",
+      "LastName": "Вячеславович",
+      "Phone": "",
+      "Email": "client@esoft.tech"
+    },
+    {
+      "Id": 6,
+      "FirstName": "Кудряшов",
+      "MiddleName": "Александр",
+      "LastName": "Витальевич",
+      "Phone": "551988",
+      "Email": ""
+    },
+    {
+      "Id": 8,
+      "FirstName": "Фёдоров",
+      "MiddleName": "Алексей",
+      "LastName": "Николаевич",
+      "Phone": "",
+      "Email": "fedorov@mail.ru"
+    },
+    {
+      "Id": 10,
+      "FirstName": "Пелымская",
+      "MiddleName": "Светлана",
+      "LastName": "Александровна",
+      "Phone": "83452112233",
+      "Email": ""
+    },
+    {
+      "Id": 12,
+      "FirstName": "Коновальчик",
+      "MiddleName": "Татьяна",
+      "LastName": "Геннадьевна",
+      "Phone": "",
+      "Email": "dummy@email.ru"
+    },
+    {
+      "Id": 14,
+      "FirstName": "Молоковская",
+      "MiddleName": "Светлана",
+      "LastName": "Михайловна",
+      "Phone": "898489848",
+      "Email": ""
+    },
+    {
+      "Id": 16,
+      "FirstName": "Моторина",
+      "MiddleName": "Анастасия",
+      "LastName": "Сергеевна",
+      "Phone": "895159848",
+      "Email": ""
+    },
+    {
+      "Id": 17,
+      "FirstName": "Поспелова",
+      "MiddleName": "Ольга",
+      "LastName": "Александровна",
+      "Phone": "",
+      "Email": "angel@mail.ru"
+    },
+    {
+      "Id": 18,
+      "FirstName": "Жиляков",
+      "MiddleName": "Владимир",
+      "LastName": "Владимирович",
+      "Phone": "445588",
+      "Email": "445588@email.ru"
+    },
+    {
+      "Id": 20,
+      "FirstName": "Ефремов",
+      "MiddleName": "Владислав",
+      "LastName": "Николаевич",
+      "Phone": "",
+      "Email": "parampampam@mail.ru"
+    },
+    {
+      "Id": 21,
+      "FirstName": "Баль",
+      "MiddleName": "Валентина",
+      "LastName": "Сергеевна",
+      "Phone": "+7998888444",
+      "Email": ""
+    },
+    {
+      "Id": 22,
+      "FirstName": "Стрелков",
+      "MiddleName": "Артем",
+      "LastName": "Николаевич",
+      "Phone": "",
+      "Email": "test@test.test"
+    },
+    {
+      "Id": 23,
+      "FirstName": "Луканин",
+      "MiddleName": "Павел",
+      "LastName": "Валерьевич",
+      "Phone": "",
+      "Email": "foo@bar.ru"
+    },
+    {
+      "Id": 25,
+      "FirstName": "Шарипова",
+      "MiddleName": "Эльвира",
+      "LastName": "Закирчановна",
+      "Phone": "12345678910",
+      "Email": ""
+    },
+    {
+      "Id": 26,
+      "FirstName": "Фомина",
+      "MiddleName": "Маргарита",
+      "LastName": "Николаевна",
+      "Phone": "",
+      "Email": "fomina@email.ru"
+    },
+    {
+      "Id": 27,
+      "FirstName": "Кремлев",
+      "MiddleName": "Владислав",
+      "LastName": "Юрьевич",
+      "Phone": "777",
+      "Email": "kremlevvu@gmail.ru"
+    },
+    {
+      "Id": 28,
+      "FirstName": "Пономарева",
+      "MiddleName": "Елена",
+      "LastName": "Сергеевна",
+      "Phone": "",
+      "Email": "ponomareva@gmail.ru"
+    },
+    {
+      "Id": 29,
+      "FirstName": "Шелест",
+      "MiddleName": "Тамара",
+      "LastName": "Васильевна",
+      "Phone": "112",
+      "Email": ""
+    },
+    {
+      "Id": 30,
+      "FirstName": "Шарипов",
+      "MiddleName": "Рустам",
+      "LastName": "Владимирович",
+      "Phone": "",
+      "Email": "sharipov@yandex.ru"
+    },
+    {
+      "Id": 31,
+      "FirstName": "Романов",
+      "MiddleName": "Сергей",
+      "LastName": "Федорович",
+      "Phone": "02",
+      "Email": ""
+    },
+    {
+      "Id": 32,
+      "FirstName": "Кручинин",
+      "MiddleName": "Иван",
+      "LastName": "Андреевич",
+      "Phone": "",
+      "Email": "kruch@list.ru"
+    },
+    {
+      "Id": 33,
+      "FirstName": "Алферов",
+      "MiddleName": "Алексей",
+      "LastName": "Николаевич",
+      "Phone": "+688899444",
+      "Email": ""
+    },
+    {
+      "Id": 35,
+      "FirstName": "Попов",
+      "MiddleName": "Алексей",
+      "LastName": "Николаевич",
+      "Phone": "+0489848565",
+      "Email": "popovan@bik.ru"
+    },
+    {
+      "Id": 36,
+      "FirstName": "Неезжала",
+      "MiddleName": "Наталья",
+      "LastName": "Леонидовна",
+      "Phone": "",
+      "Email": "neez@mail.ru"
+    }
+   ]
