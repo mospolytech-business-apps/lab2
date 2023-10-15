@@ -35,7 +35,7 @@
                                 <button class="btn btn-outline-primary" @click="editById(agent.Id)">
                                     Изменить
                                 </button>
-                                <button class="btn btn-outline-danger" @click="removeById(agent.Id)">Удалить</button>
+                                <button class="btn btn-outline-danger" @click="removeById(agent.Id)" :disabled="checkId(agent.Id,this.supplies) || checkId(agent.Id,this.demands)">Удалить</button>
                             </div>
                         </td>
                         <td v-else>
@@ -55,6 +55,8 @@
 <script>
 import { useAgentsStore } from '../store/agents'
 import levenshteinDistance from '../levenshtein.js'
+import { useDemandsStore } from '../store/demands';
+import { useSuppliesStore } from '../store/supplies';
 
 import ModalCreateAgent from "../components/ModalCreateAgent.vue";
 
@@ -67,6 +69,8 @@ export default {
             editId: -1,
             showModal: false,
             search: '',
+            demands: useDemandsStore().demands,
+            supplies: useSuppliesStore().supplies,
         }
     },
     computed: {
@@ -100,6 +104,14 @@ export default {
         cancelChanges(id) {
             this.editId = -1;
             this.agents = dataAgents;
+        },
+        checkId(id, array) {
+            for (let i = 0; i < array.length; i++) {
+                if (array[i].AgentId === id) {
+                    return true;
+                }
+            }
+            return false;
         },
     },
 }

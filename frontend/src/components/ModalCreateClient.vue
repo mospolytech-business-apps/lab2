@@ -1,6 +1,6 @@
 <template>
     <div class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content p-2 ">
                 <div class="modal-header">
                     <h5 class="modal-title fw-bold mb-0 fs-4">Добавить клиента</h5>
@@ -30,10 +30,10 @@
                             </div>
                         </div>
                         <div class="modal-footer form-group">
-                            <button class="w-40 mb-2 btn btn-lg rounded-3 btn-secondary" @click="$emit('close')">
+                            <button class="w-40 mb-2 btn btn-secondary rounded-pill" @click="$emit('close')">
                                 Отмена
                             </button>
-                            <button class="w-40 mb-2 btn btn-lg rounded-3 btn-primary" @submit="this.onSubmit" :disabled="!isValidForm">Добавить клиента</button>
+                            <button class="w-40 mb-2 btn btn-primary rounded-pill" @submit="this.onSubmit" :disabled="!isValidForm">Добавить клиента</button>
                         </div>
                     </form>
             </div>

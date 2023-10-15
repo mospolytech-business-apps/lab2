@@ -1,0 +1,100 @@
+[
+    {
+      "Id": 1,
+      "Price": 2500000,
+      "AgentId": 1,
+      "ClientId": 2,
+      "RealEstateId": 1
+    },
+    {
+      "Id": 2,
+      "Price": 5000000,
+      "AgentId": 7,
+      "ClientId": 8,
+      "RealEstateId": 3
+    },
+    {
+      "Id": 3,
+      "Price": 1300000,
+      "AgentId": 11,
+      "ClientId": 12,
+      "RealEstateId": 3
+    },
+    {
+      "Id": 4,
+      "Price": 5000000,
+      "AgentId": 15,
+      "ClientId": 16,
+      "RealEstateId": 4
+    },
+    {
+      "Id": 5,
+      "Price": 4700000,
+      "AgentId": 1,
+      "ClientId": 3,
+      "RealEstateId": 2
+    },
+    {
+      "Id": 6,
+      "Price": 3750000,
+      "AgentId": 4,
+      "ClientId": 5,
+      "RealEstateId": 3
+    },
+    {
+      "Id": 7,
+      "Price": 1900000,
+      "AgentId": 4,
+      "ClientId": 6,
+      "RealEstateId": 3
+    },
+    {
+      "Id": 8,
+      "Price": 4300000,
+      "AgentId": 9,
+      "ClientId": 10,
+      "RealEstateId": 3
+    },
+    {
+      "Id": 9,
+      "Price": 1750000,
+      "AgentId": 13,
+      "ClientId": 14,
+      "RealEstateId": 3
+    },
+    {
+      "Id": 10,
+      "Price": 5850000,
+      "AgentId": 15,
+      "ClientId": 17,
+      "RealEstateId": 5
+    },
+    {
+      "Id": 11,
+      "Price": 6800000,
+      "AgentId": 15,
+      "ClientId": 18,
+      "RealEstateId": 6
+    },
+    {
+      "Id": 12,
+      "Price": 950000,
+      "AgentId": 19,
+      "ClientId": 20,
+      "RealEstateId": 7
+    },
+    {
+      "Id": 13,
+      "Price": 700000,
+      "AgentId": 19,
+      "ClientId": 21,
+      "RealEstateId": 8
+    },
+    {
+      "Id": 14,
+      "Price": 600000,
+      "AgentId": 19,
+      "ClientId": 22,
+      "RealEstateId": 9
+    }
+   ]

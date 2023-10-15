@@ -28,15 +28,16 @@
                         <option value="land">
                             Земля
                         </option>
-                    </select>  
-                    <label for="filterType">Фильтрация по типу недвижимости</label>  
+                    </select>
+                    <label for="filterType">Фильтрация по типу недвижимости</label>
                 </div>
                 <div class="form-floating col-md-6">
-                    <input v-model="district" class="form-control" list="filterDistricts" id="inputDistrict" placeholder="Введите название района">
+                    <input v-model="district" class="form-control" list="filterDistricts" id="inputDistrict"
+                        placeholder="Введите название района">
                     <datalist id="filterDistricts">
-                        <option v-for="district in districts" :value="district.name">{{district.name}}</option>
+                        <option v-for="district in districts" :value="district.name">{{ district.name }}</option>
                     </datalist>
-                    <label for="inputDistrict">Фильтрация по району</label>  
+                    <label for="inputDistrict">Фильтрация по району</label>
                 </div>
             </form>
             <table class="table table-sm table-striped shadow-sm">
@@ -86,7 +87,7 @@
                                 <button class="btn btn-outline-primary" @click="editById(object.Id)">
                                     Изменить
                                 </button>
-                                <button class="btn btn-outline-danger" @click="removeById(object.Id)">Удалить</button>
+                                <button class="btn btn-outline-danger" @click="removeById(object.Id)" :disabled="checkId(object.Id,this.supplies)">Удалить</button>
                             </div>
                         </td>
                         <td v-else>
@@ -108,6 +109,8 @@ import { useObjectsStore } from '../store/objects';
 import levenshteinDistance from '../levenshtein.js';
 import filterInsideArea from '../districtfilter.js';
 import districtsData from '../assets/districts.json';
+import { useSuppliesStore } from '../store/supplies';
+
 
 import ModalCreateObject from "../components/ModalCreateObject.vue";
 
@@ -124,16 +127,17 @@ export default {
             filterType: 'all',
             districts: districtsData,
             district: '',
+            supplies: useSuppliesStore().supplies,
         }
     },
     computed: {
         filteredObjects() {
             let arr = useObjectsStore().objects;
             arr = this.filterByType(arr);
-            if(this.district){
-                if(districtsData.findIndex(obj => obj.name == this.district)>0){
+            if (this.district) {
+                if (districtsData.findIndex(obj => obj.name == this.district) > 0) {
                     let district = districtsData[districtsData.findIndex(obj => obj.name == this.district)];
-                    arr = filterInsideArea(district,arr)
+                    arr = filterInsideArea(district, arr)
                 }
             }
             if (this.search !== '') {
@@ -174,6 +178,14 @@ export default {
             } else {
                 return arr
             }
+        },
+        checkId(id, array) {
+            for (let i = 0; i < array.length; i++) {
+                if (array[i].RealEstateId === id) {
+                    return true;
+                }
+            }
+            return false;
         }
     },
 }

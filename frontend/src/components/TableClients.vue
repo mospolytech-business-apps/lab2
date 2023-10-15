@@ -43,7 +43,7 @@
                                 <button class="btn btn-outline-primary" @click="editById(client.Id)">
                                     Изменить
                                 </button>
-                                <button class="btn btn-outline-danger" @click="removeById(client.Id)">Удалить</button>
+                                <button class="btn btn-outline-danger" @click="removeById(client.Id)" :disabled="checkId(client.Id,this.supplies) || checkId(client.Id,this.demands)">Удалить</button>
                             </div>
                         </td>
                         <td v-else>
@@ -62,6 +62,9 @@
 
 <script>
 import { useClientsStore } from '../store/clients';
+import { useDemandsStore } from '../store/demands';
+import { useSuppliesStore } from '../store/supplies';
+
 import levenshteinDistance from '../levenshtein.js'
 
 import ModalCreateClient from "../components/ModalCreateClient.vue";
@@ -75,6 +78,8 @@ export default {
             editId: -1,
             showModal: false,
             search: '',
+            demands: useDemandsStore().demands,
+            supplies: useSuppliesStore().supplies,
         }
     },
     computed: {
@@ -101,6 +106,14 @@ export default {
         },
         cancelChanges(id) {
             this.editId = -1;
+        },
+        checkId(id, array) {
+            for (let i = 0; i < array.length; i++) {
+                if (array[i].ClientId === id) {
+                    return true;
+                }
+            }
+            return false;
         },
     },
 }

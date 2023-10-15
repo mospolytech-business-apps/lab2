@@ -1,23 +1,19 @@
 <template>
   <Header />
   <router-view></router-view>
-
-  <!-- <TableClients />
-  <TableAgents /> -->
-
 </template>
 <script>
-import TableClients from './components/TableClients.vue';
-import TableAgents from './components/TableAgents.vue';
 import Header from './components/Header.vue';
 
 import { useClientsStore } from './store/clients';
 import { useAgentsStore } from './store/agents';
+import { useObjectsStore } from './store/objects';
+import { useDemandsStore } from './store/demands';
+import { useSuppliesStore } from './store/supplies';
+
 
 export default {
   components: {
-    TableClients,
-    TableAgents,
     Header
 },
   setup() {
@@ -25,9 +21,18 @@ export default {
     clientsStore.fetchClients()
     const agentsStore = useAgentsStore()
     agentsStore.fetchAgents()
+    const objectsStore = useObjectsStore()
+    objectsStore.fetchObjects()
+    const demandsStore = useDemandsStore()
+    demandsStore.fetchDemands()
+    const suppliesStore = useSuppliesStore()
+    suppliesStore.fetchSupplies()
     return {
       clients: clientsStore.clients,
-      agents: agentsStore.agents
+      agents: agentsStore.agents,
+      objects: objectsStore.objects,
+      demands: demandsStore.demands,
+      supplies: suppliesStore.supplies,
     }
   },
 }
