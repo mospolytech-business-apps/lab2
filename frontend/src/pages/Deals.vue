@@ -1,9 +1,16 @@
 <template>
-Deals
-  </template>
-  <script>
+    <TableDeals />
+</template>
+<script>
+import TableDeals from '../components/TableDeals.vue';
 
-  </script>
+export default {
+    components: {
+    TableDeals
+},
+}
+
+</script>
   
-  <style scoped></style>
+<style scoped></style>
   

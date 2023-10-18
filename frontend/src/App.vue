@@ -10,6 +10,7 @@ import { useAgentsStore } from './store/agents';
 import { useObjectsStore } from './store/objects';
 import { useDemandsStore } from './store/demands';
 import { useSuppliesStore } from './store/supplies';
+import { useDealsStore } from './store/deals';
 
 
 export default {
@@ -27,15 +28,19 @@ export default {
     demandsStore.fetchDemands()
     const suppliesStore = useSuppliesStore()
     suppliesStore.fetchSupplies()
+    const dealsStore = useDealsStore()
+    dealsStore.fetchDeals()
     return {
       clients: clientsStore.clients,
       agents: agentsStore.agents,
       objects: objectsStore.objects,
       demands: demandsStore.demands,
       supplies: suppliesStore.supplies,
+      deals: dealsStore.deals,
     }
   },
 }
 </script>
 
-<style scoped></style>
+<style lang="scss">
+</style>

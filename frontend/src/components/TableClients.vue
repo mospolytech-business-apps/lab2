@@ -40,6 +40,9 @@
                                 v-model="client.Email" /></td>
                         <td v-if="client.Id !== editId">
                             <div class="btn-group">
+                                <button class="btn btn-outline-dark" @click="openModal = client.Id">
+                                    Открыть
+                                </button>
                                 <button class="btn btn-outline-primary" @click="editById(client.Id)">
                                     Изменить
                                 </button>
@@ -57,6 +60,7 @@
             </table>
         </div>
         <ModalCreateClient v-if="showModal" @close="showModal = false" />
+        <ModalOpen v-if="openModal>-1" :id="openModal" @close="openModal = -1" type="client" />
     </section>
 </template>
 
@@ -68,15 +72,18 @@ import { useSuppliesStore } from '../store/supplies';
 import levenshteinDistance from '../levenshtein.js'
 
 import ModalCreateClient from "../components/ModalCreateClient.vue";
+import ModalOpen from './ModalOpen.vue';
 
 export default {
     components: {
-        ModalCreateClient,
-    },
+    ModalCreateClient,
+    ModalOpen
+},
     data() {
         return {
             editId: -1,
             showModal: false,
+            openModal: -1,
             search: '',
             demands: useDemandsStore().demands,
             supplies: useSuppliesStore().supplies,

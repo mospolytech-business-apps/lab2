@@ -32,6 +32,9 @@
                         <td class="table__item"><input class="table__input form-control" :disabled="this.editId!==agent.Id" v-model="agent.DealShare"/></td>
                         <td v-if="agent.Id!==editId">
                             <div class="btn-group">
+                                <button class="btn btn-outline-dark" @click="openModal = agent.Id">
+                                    Открыть
+                                </button>
                                 <button class="btn btn-outline-primary" @click="editById(agent.Id)">
                                     Изменить
                                 </button>
@@ -49,6 +52,7 @@
             </table>
         </div>
         <ModalCreateAgent v-if="showModal" @close="showModal = false"/>
+        <ModalOpen v-if="openModal>-1" :id="openModal" @close="openModal = -1" type="agent" />
     </section>
 </template>
 
@@ -59,15 +63,18 @@ import { useDemandsStore } from '../store/demands';
 import { useSuppliesStore } from '../store/supplies';
 
 import ModalCreateAgent from "../components/ModalCreateAgent.vue";
+import ModalOpen from "../components/ModalOpen.vue";
 
 export default {
     components: {
         ModalCreateAgent,
+        ModalOpen,
     },
     data() {
         return {
             editId: -1,
             showModal: false,
+            openModal: -1,
             search: '',
             demands: useDemandsStore().demands,
             supplies: useSuppliesStore().supplies,
