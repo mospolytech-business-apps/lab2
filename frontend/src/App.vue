@@ -4,6 +4,7 @@
 </template>
 <script>
 import Header from './components/Header.vue';
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 import { useClientsStore } from './store/clients';
 import { useAgentsStore } from './store/agents';

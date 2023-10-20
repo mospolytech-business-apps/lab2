@@ -11,15 +11,18 @@ export const useClientsStore = defineStore('clients', {
 
   actions: {
     async fetchClients() {
-    //   const response = await fetch('clients.json')
-    //   this.clients = await response.json()
       this.clients = dataClients;
     },
-
+    changeClient(id, updatedClient) {
+      const index = this.clients.findIndex(client => client.Id === id);
+      if (index !== -1) {
+        const updated = {...this.clients[index], ...updatedClient};
+        this.clients.splice(index, 1, updated); 
+      }
+    },
     addClient(client) {
       this.clients.push(client) 
     },
-
     removeClient(id) {
         let arr = this.clients;
         this.clients = arr.filter(item => item.Id !== id)

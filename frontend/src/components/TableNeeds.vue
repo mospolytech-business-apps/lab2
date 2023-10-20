@@ -33,39 +33,72 @@
                         </tr>
                     </thead>
                     <tbody class="table-hover">
-                        <tr v-for="demand in filteredDemands" :key="demand.Id" :class="{ 'table-info': demand.Id == editId }">
-                            <td class="table__item"><input class="table__input form-control"
-                                    :disabled="this.editId !== demand.Id" v-model="demand.Id" /></td>
-                            <td class="table__item"><input class="table__input form-control"
-                                    :disabled="this.editId !== demand.Id" v-model="demand.ClientId" /></td>
-                            <td class="table__item"><input class="table__input form-control"
-                                    :disabled="this.editId !== demand.Id" v-model="demand.AgentId" /></td>
-                            <td class="table__item"><input class="table__input form-control"
-                                    :disabled="this.editId !== demand.Id" v-model="demand.Type" /></td>
-                            <td class="table__item"><input class="table__input form-control"
-                                    :disabled="this.editId !== demand.Id" v-model="demand.Address_City" /></td>
-                            <td class="table__item"><input class="table__input form-control"
-                                    :disabled="this.editId !== demand.Id" v-model="demand.Address_Street" /></td>
-                            <td class="table__item"><input class="table__input form-control"
-                                    :disabled="this.editId !== demand.Id" v-model="demand.Address_House" /></td>
-                            <td class="table__item"><input class="table__input form-control"
-                                    :disabled="this.editId !== demand.Id" v-model="demand.Address_Number" /></td>
-                            <td class="table__item"><input class="table__input form-control"
-                                    :disabled="this.editId !== demand.Id" v-model="demand.MinPrice" /></td>
-                            <td class="table__item"><input class="table__input form-control"
-                                    :disabled="this.editId !== demand.Id" v-model="demand.MaxPrice" /></td>
-                            <td class="table__item"><input class="table__input form-control"
-                                    :disabled="this.editId !== demand.Id" v-model="demand.MinArea" /></td>
-                            <td class="table__item"><input class="table__input form-control"
-                                    :disabled="this.editId !== demand.Id" v-model="demand.MaxArea" /></td>
-                            <td class="table__item"><input class="table__input form-control"
-                                    :disabled="this.editId !== demand.Id" v-model="demand.MinRooms" /></td>
-                            <td class="table__item"><input class="table__input form-control"
-                                    :disabled="this.editId !== demand.Id" v-model="demand.MaxRooms" /></td>
-                            <td class="table__item"><input class="table__input form-control"
-                                    :disabled="this.editId !== demand.Id" v-model="demand.MinFloor" /></td>
-                            <td class="table__item"><input class="table__input form-control"
-                                    :disabled="this.editId !== demand.Id" v-model="demand.MaxFloor" /></td>
+                        <tr v-for="demand in filteredDemands" :key="demand.Id"
+                            :class="{ 'table-info': demand.Id == editId }">
+                            <td class="table__item">
+                                <input class="table__input form-control" :disabled="this.editId !== demand.Id"
+                                    v-model="demand.Id" />
+                            </td>
+                            <td class="table__item">
+                                <input class="table__input form-control" :disabled="this.editId !== demand.Id"
+                                    v-model="demand.ClientId" />
+                            </td>
+                            <td class="table__item">
+                                <input class="table__input form-control" :disabled="this.editId !== demand.Id"
+                                    v-model="demand.AgentId" />
+                            </td>
+                            <td class="table__item">
+                                <input class="table__input form-control" :disabled="this.editId !== demand.Id"
+                                    v-model="demand.Type" />
+                            </td>
+                            <td class="table__item">
+                                <input class="table__input form-control" :disabled="this.editId !== demand.Id"
+                                    v-model="demand.Address_City" />
+                            </td>
+                            <td class="table__item">
+                                <input class="table__input form-control" :disabled="this.editId !== demand.Id"
+                                    v-model="demand.Address_Street" />
+                            </td>
+                            <td class="table__item">
+                                <input class="table__input form-control" :disabled="this.editId !== demand.Id"
+                                    v-model="demand.Address_House" />
+                            </td>
+                            <td class="table__item">
+                                <input class="table__input form-control" :disabled="this.editId !== demand.Id"
+                                    v-model="demand.Address_Number" />
+                            </td>
+                            <td class="table__item">
+                                <input class="table__input form-control" :disabled="this.editId !== demand.Id"
+                                    v-model="demand.MinPrice" />
+                            </td>
+                            <td class="table__item">
+                                <input class="table__input form-control" :disabled="this.editId !== demand.Id"
+                                    v-model="demand.MaxPrice" />
+                            </td>
+                            <td class="table__item">
+                                <input class="table__input form-control" :disabled="this.editId !== demand.Id"
+                                    v-model="demand.MinArea" />
+                            </td>
+                            <td class="table__item">
+                                <input class="table__input form-control" :disabled="this.editId !== demand.Id"
+                                    v-model="demand.MaxArea" />
+                            </td>
+                            <td class="table__item">
+                                <input class="table__input form-control" :disabled="this.editId !== demand.Id"
+                                    v-model="demand.MinRooms" />
+                            </td>
+                            <td class="table__item">
+                                <input class="table__input form-control" :disabled="this.editId !== demand.Id"
+                                    v-model="demand.MaxRooms" />
+                            </td>
+                            <td class="table__item">
+                                <input class="table__input form-control" :disabled="this.editId !== demand.Id"
+                                    v-model="demand.MinFloor" />
+                            </td>
+                            <td class="table__item">
+                                <input class="table__input form-control" :disabled="this.editId !== demand.Id"
+                                    v-model="demand.MaxFloor" />
+                            </td>
                             <td v-if="demand.Id !== editId">
                                 <div class="btn-group">
                                     <button class="btn btn-outline-primary" @click="editById(demand.Id)">
@@ -86,7 +119,8 @@
             </div>
         </div>
         <ModalCreateNeed v-if="showModal" @close="showModal = false" />
-        <ModalProofDelete v-if="deleteModal>-1" @close="deleteModal = -1" @proof="removeById(deleteModal)">выбранный объект #<b>{{deleteModal}}</b>?</ModalProofDelete>
+        <ModalProofDelete v-if="deleteModal > -1" @close="deleteModal = -1" @proof="removeById(deleteModal)">выбранный объект
+            #<b>{{ deleteModal }}</b>?</ModalProofDelete>
     </section>
 </template>
 
@@ -98,9 +132,9 @@ import ModalProofDelete from './ModalProofDelete.vue';
 
 export default {
     components: {
-    ModalCreateNeed,
-    ModalProofDelete
-},
+        ModalCreateNeed,
+        ModalProofDelete
+    },
     data() {
         return {
             editId: -1,
@@ -148,6 +182,7 @@ export default {
     width: 100%;
     overflow: scroll;
 }
+
 .table {
     width: 2400px;
 }
@@ -173,5 +208,4 @@ export default {
     text-align: center;
     margin-right: 2px;
     background-color: rgb(169, 169, 169);
-}
-</style>
+}</style>
