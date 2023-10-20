@@ -46,7 +46,7 @@
                                 <button class="btn btn-outline-primary" @click="editById(client.Id)">
                                     Изменить
                                 </button>
-                                <button class="btn btn-outline-danger" @click="removeById(client.Id)" :disabled="checkId(client.Id,this.supplies) || checkId(client.Id,this.demands)">Удалить</button>
+                                <button class="btn btn-outline-danger" @click="deleteModal=client.Id" :disabled="checkId(client.Id,this.supplies) || checkId(client.Id,this.demands)">Удалить</button>
                             </div>
                         </td>
                         <td v-else>
@@ -61,6 +61,7 @@
         </div>
         <ModalCreateClient v-if="showModal" @close="showModal = false" />
         <ModalOpen v-if="openModal>-1" :id="openModal" @close="openModal = -1" type="client" />
+        <ModalProofDelete v-if="deleteModal>-1" @close="deleteModal = -1" @proof="removeById(deleteModal)">выбранного клиента #<b>{{deleteModal}}</b>?</ModalProofDelete>
     </section>
 </template>
 
@@ -73,17 +74,20 @@ import levenshteinDistance from '../levenshtein.js'
 
 import ModalCreateClient from "../components/ModalCreateClient.vue";
 import ModalOpen from './ModalOpen.vue';
+import ModalProofDelete from './ModalProofDelete.vue';
 
 export default {
     components: {
     ModalCreateClient,
-    ModalOpen
+    ModalOpen,
+    ModalProofDelete
 },
     data() {
         return {
             editId: -1,
             showModal: false,
             openModal: -1,
+            deleteModal: -1,
             search: '',
             demands: useDemandsStore().demands,
             supplies: useSuppliesStore().supplies,

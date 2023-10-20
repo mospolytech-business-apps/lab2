@@ -1,6 +1,6 @@
 <template>
   <header class="d-flex py-3 bg-primary bg-gradient shadow-sm">
-    <div class="header__wrapper align-items-center d-flex justify-content-between">
+    <div class="header__wrapper align-items-center d-flex justify-content-between flex-wrap">
       <a href="/" class="d-flex bg-light py-1 p-2 rounded align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
         <img class="me-2" height="36" src="../assets/images/logo.png"/>
       </a>

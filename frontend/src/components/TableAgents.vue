@@ -38,7 +38,7 @@
                                 <button class="btn btn-outline-primary" @click="editById(agent.Id)">
                                     Изменить
                                 </button>
-                                <button class="btn btn-outline-danger" @click="removeById(agent.Id)" :disabled="checkId(agent.Id,this.supplies) || checkId(agent.Id,this.demands)">Удалить</button>
+                                <button class="btn btn-outline-danger" @click="deleteModal=agent.Id" :disabled="checkId(agent.Id,this.supplies) || checkId(agent.Id,this.demands)">Удалить</button>
                             </div>
                         </td>
                         <td v-else>
@@ -53,6 +53,7 @@
         </div>
         <ModalCreateAgent v-if="showModal" @close="showModal = false"/>
         <ModalOpen v-if="openModal>-1" :id="openModal" @close="openModal = -1" type="agent" />
+        <ModalProofDelete v-if="deleteModal>-1" @close="deleteModal = -1" @proof="removeById(deleteModal)">выбранного риэлтора #<b>{{deleteModal}}</b>?</ModalProofDelete>
     </section>
 </template>
 
@@ -64,17 +65,20 @@ import { useSuppliesStore } from '../store/supplies';
 
 import ModalCreateAgent from "../components/ModalCreateAgent.vue";
 import ModalOpen from "../components/ModalOpen.vue";
+import ModalProofDelete from './ModalProofDelete.vue';
 
 export default {
     components: {
-        ModalCreateAgent,
-        ModalOpen,
-    },
+    ModalCreateAgent,
+    ModalOpen,
+    ModalProofDelete
+},
     data() {
         return {
             editId: -1,
             showModal: false,
             openModal: -1,
+            deleteModal: -1,
             search: '',
             demands: useDemandsStore().demands,
             supplies: useSuppliesStore().supplies,

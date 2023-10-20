@@ -71,7 +71,7 @@
                                     <button class="btn btn-outline-primary" @click="editById(demand.Id)">
                                         Изменить
                                     </button>
-                                    <button class="btn btn-outline-danger" @click="removeById(demand.Id)">Удалить</button>
+                                    <button class="btn btn-outline-danger" @click="deleteModal = demand.Id">Удалить</button>
                                 </div>
                             </td>
                             <td v-else>
@@ -86,6 +86,7 @@
             </div>
         </div>
         <ModalCreateNeed v-if="showModal" @close="showModal = false" />
+        <ModalProofDelete v-if="deleteModal>-1" @close="deleteModal = -1" @proof="removeById(deleteModal)">выбранный объект #<b>{{deleteModal}}</b>?</ModalProofDelete>
     </section>
 </template>
 
@@ -93,15 +94,18 @@
 import { useDemandsStore } from '../store/demands';
 
 import ModalCreateNeed from "../components/ModalCreateNeed.vue";
+import ModalProofDelete from './ModalProofDelete.vue';
 
 export default {
     components: {
-        ModalCreateNeed,
-    },
+    ModalCreateNeed,
+    ModalProofDelete
+},
     data() {
         return {
             editId: -1,
             showModal: false,
+            deleteModal: -1,
             search: '',
             id: '',
             filterType: 'all',
@@ -110,21 +114,6 @@ export default {
     computed: {
         filteredDemands() {
             let arr = useDemandsStore().demands;
-            // arr = this.filterByType(arr);
-            // if(this.district){
-            //     if(districtsData.findIndex(obj => obj.name == this.district)>0){
-            //         let district = districtsData[districtsData.findIndex(obj => obj.name == this.district)];
-            //         arr = filterInsideArea(district,arr)
-            //     }
-            // }
-            // if (this.search !== '') {
-            //     return arr.filter(object => {
-            //         const text = `${object.Address_City} ${object.Address_Street}`
-            //         const nums = `${object.Address_House} ${object.Address_Number}`
-            //         const searchWords = this.search.split(' ')
-            //         return (levenshteinDistance(text, searchWords[0] + ' ' + searchWords[1]) <= 3 & levenshteinDistance(nums, searchWords[2] + ' ' + searchWords[3]) <= 1)
-            //     })
-            // }
             return arr
         }
     },

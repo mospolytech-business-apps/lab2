@@ -11,7 +11,7 @@ import { useObjectsStore } from './store/objects';
 import { useDemandsStore } from './store/demands';
 import { useSuppliesStore } from './store/supplies';
 import { useDealsStore } from './store/deals';
-
+import { useMobileStore } from './store/mobile';
 
 export default {
   components: {
@@ -30,6 +30,8 @@ export default {
     suppliesStore.fetchSupplies()
     const dealsStore = useDealsStore()
     dealsStore.fetchDeals()
+    const mobileStore = useMobileStore()
+    mobileStore.fetchMobile()
     return {
       clients: clientsStore.clients,
       agents: agentsStore.agents,
@@ -37,6 +39,7 @@ export default {
       demands: demandsStore.demands,
       supplies: suppliesStore.supplies,
       deals: dealsStore.deals,
+      mobile: mobileStore.mobile,
     }
   },
 }

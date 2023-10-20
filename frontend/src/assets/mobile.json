@@ -1,0 +1,18 @@
+[
+    {
+        "uuid": "5c94f796-b959-4e94-9686-69ed395f3f5a",
+        "agent_id": 1,
+        "datetime": 201533556961,
+        "duration": 3650,
+        "type": "presentation",
+        "comment": "my client presentation"
+    },
+    {
+        "uuid": "9c143eb8-51fc-4917-b5b2-59617cf4ee4c",
+        "agent_id": 1,
+        "datetime": 1533557006,
+        "duration": 7200,
+        "type": "meeting",
+        "comment": "contract negotiation"
+    }
+]

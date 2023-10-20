@@ -30,7 +30,7 @@
                                 <button class="btn btn-outline-primary" @click="editById(deal.Id)">
                                     Изменить
                                 </button>
-                                <button class="btn btn-outline-danger" @click="removeById(deal.Id)">Удалить</button>
+                                <button class="btn btn-outline-danger" @click="deleteModal = deal.Id">Удалить</button>
                             </div>
                         </td>
                         <td v-else>
@@ -44,6 +44,7 @@
             </table>
         </div>
         <ModalCreateDeal v-if="showModal" @close="showModal = false" />
+        <ModalProofDelete v-if="deleteModal>-1" @close="deleteModal = -1" @proof="removeById(deleteModal)">выбранный объект #<b>{{deleteModal}}</b>?</ModalProofDelete>
     </section>
 </template>
 
@@ -51,15 +52,18 @@
 import { useDealsStore } from '../store/deals';
 
 import ModalCreateDeal from './ModalCreateDeal.vue';
+import ModalProofDelete from './ModalProofDelete.vue';
 
 export default {
     components: {
-    ModalCreateDeal
+    ModalCreateDeal,
+    ModalProofDelete
 },
     data() {
         return {
             editId: -1,
             showModal: false,
+            deleteModal: -1,
             search: '',
             id: '',
             filterType: 'all',

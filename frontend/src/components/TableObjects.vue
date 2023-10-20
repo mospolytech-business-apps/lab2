@@ -87,7 +87,7 @@
                                 <button class="btn btn-outline-primary" @click="editById(object.Id)">
                                     Изменить
                                 </button>
-                                <button class="btn btn-outline-danger" @click="removeById(object.Id)" :disabled="checkId(object.Id,this.supplies)">Удалить</button>
+                                <button class="btn btn-outline-danger" @click="deleteModal=object.Id" :disabled="checkId(object.Id,this.supplies)">Удалить</button>
                             </div>
                         </td>
                         <td v-else>
@@ -101,6 +101,7 @@
             </table>
         </div>
         <ModalCreateObject v-if="showModal" @close="showModal = false" />
+        <ModalProofDelete v-if="deleteModal>-1" @close="deleteModal = -1" @proof="removeById(deleteModal)">выбранный объект #<b>{{deleteModal}}</b>?</ModalProofDelete>
     </section>
 </template>
 
@@ -113,14 +114,17 @@ import { useSuppliesStore } from '../store/supplies';
 
 
 import ModalCreateObject from "../components/ModalCreateObject.vue";
+import ModalProofDelete from './ModalProofDelete.vue';
 
 export default {
     components: {
-        ModalCreateObject,
-    },
+    ModalCreateObject,
+    ModalProofDelete
+},
     data() {
         return {
             editId: -1,
+            deleteModal: -1,
             showModal: false,
             search: '',
             id: '',
