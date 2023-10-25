@@ -10,8 +10,6 @@ export const useDealsStore = defineStore('deals', {
 
   actions: {
     async fetchDeals() {
-    //   const response = await fetch('deals.json')
-    //   this.deals = await response.json()
       this.deals = dataDeals;
     },
 
@@ -22,6 +20,14 @@ export const useDealsStore = defineStore('deals', {
     removeDeal(id) {
         let arr = this.deals;
         this.deals = arr.filter(item => item.Id !== id)
-    }
+    },
+
+    changeDeal(id, updatedDeal) {
+      const index = this.deals.findIndex(deal => deal.Id === id);
+      if (index !== -1) {
+        const updated = {...this.deals[index], ...updatedDeal};
+        this.deals.splice(index, 1, updated); 
+      }
+    },
   }
 })

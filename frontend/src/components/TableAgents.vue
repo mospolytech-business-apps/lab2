@@ -12,6 +12,33 @@
                     Добавить агента
                 </button>
             </div>
+            <form v-if="editId > -1" @submit.prevent="onSubmit">
+                <div class="modal-body row g-2">
+                    <div class="form-floating col-md-4">
+                        <input v-model="content.MiddleName" class="form-control rounded-3" id="MiddleName">
+                        <label for="MiddleName">Фамилия</label>
+                    </div>
+                    <div class="form-floating col-md-4">
+                        <input v-model="content.FirstName" id="FirstName" class="form-control rounded-3">
+                        <label for="FirstName">Имя</label>
+                    </div>
+                    <div class="form-floating col-md-4">
+                        <input id="LastName" v-model="content.LastName" class="form-control rounded-3">
+                        <label for="LastName">Отчество</label>
+                    </div>
+                    <div class="form-floating col-md-4">
+                        <input id="Phone" v-model="content.DealShare" type="number" class="form-control rounded-3">
+                        <label for="Phone">Доля от комиссии</label>
+                    </div>
+                    <div class="form-floating col-md-4 align-self-end d-flex justify-content-end">
+                        <button @click="cancelChanges" class="w-40 mx-2 btn btn-secondary rounded-pill">
+                            Отменить изменения
+                        </button>
+                        <button class="w-40 mx-2 btn btn-primary rounded-pill" @click="saveChanges(editId)"
+                            :disabled="!isValidForm">Сохранить изменения</button>
+                    </div>
+                </div>
+            </form>
             <table class="table table-striped shadow-sm">
                 <thead>
                     <tr>
@@ -25,26 +52,34 @@
                 </thead>
                 <tbody class="table-hover">
                     <tr v-for="agent in filteredAgents" :key="agent.Id" :class="{'table-info': agent.Id==editId}">
-                        <th scope="row" class="table__item"><input class="table__input form-control" :disabled="this.editId!==agent.Id" v-model="agent.Id" /></th>
-                        <td class="table__item"><input class="table__input form-control" :disabled="this.editId!==agent.Id" v-model="agent.FirstName" /></td>
-                        <td class="table__item"><input class="table__input form-control" :disabled="this.editId!==agent.Id" v-model="agent.MiddleName" /></td>
-                        <td class="table__item"><input class="table__input form-control" :disabled="this.editId!==agent.Id" v-model="agent.LastName" /></td>
-                        <td class="table__item"><input class="table__input form-control" :disabled="this.editId!==agent.Id" v-model="agent.DealShare"/></td>
-                        <td v-if="agent.Id!==editId">
-                            <div class="btn-group">
-                                <button class="btn btn-outline-dark" @click="openModal = agent.Id">
-                                    Открыть
-                                </button>
-                                <button class="btn btn-outline-primary" @click="editById(agent.Id)">
-                                    Изменить
-                                </button>
-                                <button class="btn btn-outline-danger" @click="deleteModal=agent.Id" :disabled="checkId(agent.Id,this.supplies) || checkId(agent.Id,this.demands)">Удалить</button>
-                            </div>
+                        <th scope="row" class="table__item">
+                            <p class="table__input" :disabled="this.editId!==agent.Id">{{agent.Id}}</p>
+                        </th>
+                        <td class="table__item">
+                            <p class="table__input" :disabled="this.editId!==agent.Id">{{agent.FirstName}}</p>
                         </td>
-                        <td v-else>
-                            <div class="btn-group">
-                                <button class="btn btn-success" @click="saveChanges(agent.Id)">Сохранить</button>
-                                <button class="btn btn-warning" @click="cancelChanges(agent.Id)">Отменить</button>
+                        <td class="table__item">
+                            <p class="table__input" :disabled="this.editId!==agent.Id">{{agent.MiddleName}}</p>
+                        </td>
+                        <td class="table__item">
+                            <p class="table__input" :disabled="this.editId!==agent.Id">{{agent.LastName}}</p>
+                        </td>
+                        <td class="table__item">
+                            <p class="table__input" :disabled="this.editId!==agent.Id">{{agent.DealShare}}</p>
+                        </td>
+                        <td class="table__item px-3">
+                            <div class="btn-group row " >
+                                <button style="width:38px; height: 38px;" class="rounded-circle p-2 lh-1 btn btn-outline-dark" @click="openModal = agent.Id">
+                                    <i class="bi-box-arrow-up-right"></i>
+                                </button>
+                                <button style="width:38px; height: 38px;" class="mx-2 rounded-circle p-2 lh-1 btn btn-outline-primary" @click="editById(agent.Id, agent)">
+                                    <i class="bi-pencil-square"></i>
+                                </button>
+                                <button style="width:38px; height: 38px;" class="rounded-circle p-2 lh-1 btn btn-danger"
+                                    @click="deleteModal = agent.Id"
+                                    :disabled="checkId(agent.Id, this.supplies) || checkId(agent.Id, this.demands)">
+                                    <i class="bi-trash"></i>
+                                </button>
                             </div>
                         </td>
                     </tr>
@@ -82,6 +117,13 @@ export default {
             search: '',
             demands: useDemandsStore().demands,
             supplies: useSuppliesStore().supplies,
+            content: {
+                FirstName: '',
+                LastName: '',
+                MiddleName: '',
+                DealShare: '',
+                Id: 0
+            }
         }
     },
     computed: {
@@ -98,19 +140,27 @@ export default {
                 })
             }
             return useAgentsStore().agents
-        }
+        },
+        isValidForm() {
+            return !(!(this.content.FirstName))  & !(!(this.content.LastName)) & !(!(this.content.MiddleName))
+        },
     },
     methods: {
         removeById(id) {
             useAgentsStore().removeAgent(id);
         },
-        editById(id) {
+        editById(id, obj) {
             this.editId = id;
+            this.content.FirstName = obj.FirstName;
+            this.content.LastName = obj.LastName;
+            this.content.MiddleName = obj.MiddleName;
+            this.content.DealShare = obj.DealShare;
+            this.content.Id = obj.Id;
         },
         saveChanges(id) {
-            // const index = this.agents.findIndex(c => c.id === agent.id);
-            // this.agents.splice(index, 1, updatedagent);
             this.editId = -1;
+            useAgentsStore().changeAgent(id, this.content)
+            console.log(id, this.content)
         },
         cancelChanges(id) {
             this.editId = -1;
@@ -137,15 +187,6 @@ export default {
 .table__item {
     font-size: 18px;
 
-}
-.table__input {
-    font-size: 18px;
-    border: 1px solid black;
-    &:disabled {
-        border: 1px solid transparent;
-        color: black;
-        background: none;
-    }
 }
 .table__button {
     cursor: pointer;

@@ -197,7 +197,9 @@ export default {
     font-size: 18px;
 
 }
-
+.btn:disabled:hover {
+    opacity: 0.5;
+}
 .table__input {
     font-size: 18px;
 }

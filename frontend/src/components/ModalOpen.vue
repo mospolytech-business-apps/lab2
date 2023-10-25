@@ -4,43 +4,11 @@
             <div class="modal-content p-2 ">
                 <div class="modal-header">
                     <h5 v-if="this.type=='client'" class="modal-title fw-bold mb-0 fs-4">Окно клиента #{{this.id}}</h5>
-                    <h5 v-else class="modal-title fw-bold mb-0 fs-4">Окно риэтора #{{this.id}}</h5>
+                    <h5 v-if="this.type=='agent'" class="modal-title fw-bold mb-0 fs-4">Окно риэтора #{{this.id}}</h5>
+                    <h5 v-if="this.type=='deal'" class="modal-title fw-bold mb-0 fs-4">Окно сделки #{{this.id}}</h5>
                     <button type="button" class="btn btn-close" @click="$emit('close')"></button>
                 </div>
-                    <!-- <form @submit.prevent="onSubmit">
-                        <div class="modal-body row g-2">
-                            <div class="form-floating mb-3">
-                                <select id="type" v-model="ClientId" class="form-select" aria-label="Объект недвижимости">
-                                    <option v-for="client in clients" :key="client.Id" :value="client.Id">{{client.Id}} {{client.FirstName}} {{client.MiddleName}} {{client.LastName}}</option>
-                                </select>
-                                <label for="type" class="required">Клиент</label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <select id="type" v-model="AgentId" class="form-select" aria-label="Объект недвижимости">
-                                    <option v-for="agent in agents" :key="agent.Id" :value="agent.Id">{{agent.Id}} {{agent.FirstName}} {{agent.MiddleName}} {{agent.LastName}} (доля комиссии {{agent.DealShare}})</option>
-                                </select>
-                                <label for="type" class="required">Риэлтор</label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <select id="type" v-model="RealEstateId" class="form-select" aria-label="Объект недвижимости">
-                                    <option v-for="object in objects" :key="object.Id" :value="object.Id">{{object.Id}} {{object.Address_City}} {{object.Address_Street}} дом {{object.Address_House}} кв. {{object.Address_Number}} площадь {{object.TotalArea}}</option>
-                                </select>
-                                <label for="type" class="required">Объект недвижимости</label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input required id="Address_Number" v-model="Price" type="number" class="form-control rounded-3">
-                                <label for="Address_Number" class="required">Цена</label>
-                                <small id="Address_Number" class="form-text text-muted">Цена должна быть целым положительным числом</small>
-                            </div>
-                        </div>
-                        <div class="modal-footer form-group">
-                            <button class="w-40 mb-2 btn btn-secondary rounded-pill" @click="$emit('close')">
-                                Отмена
-                            </button>
-                            <button class="w-40 mb-2 btn btn-primary rounded-pill" @submit="this.onSubmit" :disabled="!isValidForm">Добавить предложение</button>
-                        </div>
-                    </form> -->
-                <div class="modal-body">
+                <div v-if="this.type !== 'deal'" class="modal-body">
                     <div class="list-group mb-3">
                         <div v-for="item in listSupplies" :key="item.Id" href="#" class="card text-danger border-danger list-group-item list-group-item-action p-1" aria-current="true">
                             <div class="card-body">
@@ -64,6 +32,12 @@
                         </div>
                     </div>
                 </div>
+                <div v-else class="modal-body list-group">
+                    <div class="list-group-item align-items-center justidy-content-center d-flex gap-3 py-3" v-for="key in Object.keys(this.outputDeal())">
+                        <h6 class="mb-0">{{key}}</h6>
+                        <p class="mb-0">{{Math.abs(this.outputDeal()[key])}} руб.</p>
+                    </div>
+                </div>
                 </div>
         </div>
     </div>
@@ -72,6 +46,12 @@
 <script>
 import { useSuppliesStore } from '../store/supplies'
 import { useDemandsStore } from '../store/demands'
+import { useObjectsStore } from '../store/objects'
+import { useDealsStore } from '../store/deals';
+
+
+
+import calculateCommission from '../calc.js'
 
 export default {
     props: ['id','type'],
@@ -92,6 +72,18 @@ export default {
     methods: {
         onSubmit() {
             return
+        },
+        outputDeal(){
+            let objects = useObjectsStore().objects;
+            let supplies = useSuppliesStore().supplies;
+            let myDeal = useDealsStore().deals.filter(j => j.Id == this.id)[0];
+            let mySupply = supplies.filter(item => item.RealEstateId == myDeal.Supply_Id)[0];
+            console.log(mySupply.RealEstateId)
+            let x = objects.filter(item => item.Id == mySupply.RealEstateId)[0]
+            console.log(x)
+            return calculateCommission(
+                x.Type
+            ,mySupply.Price)
         }
     }
 }

@@ -23,6 +23,14 @@ export const useAgentsStore = defineStore('agents', {
     removeAgent(id) {
         let arr = this.agents;
         this.agents = arr.filter(item => item.Id !== id)
-    }
+    },
+
+    changeAgent(id, updatedAgent) {
+      const index = this.agents.findIndex(agent => agent.Id === id);
+      if (index !== -1) {
+        const updated = {...this.agents[index], ...updatedAgent};
+        this.agents.splice(index, 1, updated); 
+      }
+    },
   }
 })

@@ -12,7 +12,7 @@
                     <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end"
                     data-bs-dismiss="modal" @click="$emit('close')">Нет, оставить</button>
                     <button type="button" @click="$emit('proof');$emit('close')"
-                        class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 "><strong>Да, удалить</strong></button>
+                        class="btn btn-lg text-danger btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 "><strong>Да, удалить</strong></button>
                 </div>
             </div>
         </div>
