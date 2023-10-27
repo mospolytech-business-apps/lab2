@@ -10,24 +10,24 @@
                 </button>
             </div>
             <form v-if="editId > -1" @submit.prevent="onSubmit">
-                <div class="modal-body row g-2">
-                    <div class="form-floating mb-3">
+                <div class="modal-body row d-flex g-2">
+                    <div class="form-floating mb-3 col-md-4">
                         <select id="demand" v-model="content.Demand_Id" class="form-select" aria-label="Потребность">
                             <option v-for="demand in demands" :key="demand.Id" :value="demand.Id">{{outputDemand(demand)}}</option>
                         </select>
                         <label for="demand" class="required">Потребность</label>
                     </div>
-                    <div class="form-floating mb-3">
+                    <div class="form-floating mb-3 col-md-4">
                         <select id="supply" v-model="content.Supply_Id" class="form-select" aria-label="Предложение">
                             <option v-for="supply in supplies" :key="supply.Id" :value="supply.Id">Предложение #{{outputSupply(supply)}}</option>
                         </select>
                         <label for="supply" class="required">Предложение</label>
                     </div>
-                    <div class="form-floating col-md-4 align-self-end d-flex justify-content-end">
-                        <button @click="cancelChanges" class="w-40 mx-2 btn btn-secondary rounded-pill">
+                    <div class="mb-3 form-floating col-md-4 align-self-end d-flex justify-content-end">
+                        <button @click="cancelChanges" class="w-30 mx-2 btn btn-secondary rounded-pill">
                             Отменить изменения
                         </button>
-                        <button class="w-40 mx-2 btn btn-primary rounded-pill" @click="saveChanges(editId)"
+                        <button class="w-30 mx-2 btn btn-primary rounded-pill" @click="saveChanges(editId)"
                             :disabled="!isValidForm">Сохранить изменения</button>
                     </div>
                 </div>

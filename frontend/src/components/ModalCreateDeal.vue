@@ -20,9 +20,9 @@
                                 </select>
                                 <label for="demand" class="required">Потребность</label>
                             </div>
-                            Рекомандации:
+                            Рекомандованные предложения:
                             <div class="row row-cols-5 me-2 d-flex justify-content-around">
-                                <button @click="this.Supply_Id = rec.Id" class="col btn btn-info m-1" v-for="rec in isRecomandations">{{rec.Id}}</button>
+                                <button type="button" @click="this.Supply_Id = rec.Id" class="btn btn-outline-info m-1 p-2" v-for="rec in isRecomandations"><p style="font-size: 12px; margin: 0">#{{rec.Id}} {{rec.Price}}руб.</p></button>
                             </div>
                         </div>
                         <div class="modal-footer form-group">
@@ -70,8 +70,8 @@ export default {
             let areaDemand = [this.demands.filter(i => i.Id == this.Demand_Id)[0].MinArea,this.demands.filter(i => i.Id == this.Demand_Id)[0].MaxArea]
             pricesDemand[0]==''?pricesDemand[0]=0:false; pricesDemand[1]=='' || pricesDemand[1]==null?pricesDemand[1]=999999999:false
             areaDemand[0]==''|| areaDemand[0]==null?areaDemand[0]=0:false; areaDemand[1]=='' || areaDemand[1]==null?areaDemand[1]=999999999:false
-            console.log(areaDemand)
             let list = this.supplies.filter(item => item.Price <= pricesDemand[1] & pricesDemand[0] <= item.Price)
+            list = list.filter(item => !(this.filteredSupplies.indexOf(item) == -1))
             // list = list.filter(item => item.Price <= pricesDemand[1] & pricesDemand[0] <= item.Price)
             return list
         }
@@ -99,7 +99,8 @@ export default {
         Id: useDealsStore().deals[useDealsStore().deals.length - 1].Id + 1
       }
       useDealsStore().addDeal(deal);
-      console.log(deal)
+      console.log(deal);
+      this.$emit('close');
     },
     checkIdDemand(id, array) {
             for (let i = 0; i < array.length; i++) {
