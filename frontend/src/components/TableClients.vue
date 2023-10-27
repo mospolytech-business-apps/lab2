@@ -40,7 +40,8 @@
                             Отменить изменения
                         </button>
                         <button class="w-40 mx-2 btn btn-primary rounded-pill" @click="saveChanges(editId)"
-                            :disabled="!isValidForm">Сохранить изменения</button>
+                            :disabled="!isValidForm">Сохранить изменения
+                        </button>
                     </div>
                 </div>
             </form>

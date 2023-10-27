@@ -8,6 +8,13 @@ export const useObjectsStore = defineStore('objects', {
     }
   },
   actions: {
+    changeObject(id, updatedObject) {
+      const index = this.objects.findIndex(object => object.Id === id);
+      if (index !== -1) {
+        const updated = {...this.objects[index], ...updatedObject};
+        this.objects.splice(index, 1, updated); 
+      }
+    },
     async fetchObjects() {
     //   const response = await fetch('objects.json')
     //   this.objects = await response.json()
@@ -17,12 +24,7 @@ export const useObjectsStore = defineStore('objects', {
     addObject(object) {
       this.objects.push(object) 
     },
-    changeObject(id,object) {
-        const index = this.objects.findIndex(obj => obj.Id === id);
-        if (index !== -1) {
-          this.objects[index] = object;
-        }
-      },
+    
     removeObject(id) {
         let arr = this.objects;
         this.objects = arr.filter(item => item.Id !== id)

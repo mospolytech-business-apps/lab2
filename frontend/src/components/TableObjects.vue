@@ -13,6 +13,72 @@
                     Добавить объект
                 </button>
             </div>
+            <form v-if="editId !== -1" @submit.prevent="onSubmit" class="p-2 bg-info-subtle">
+                <div class="modal-body row g-2">
+                    <div class="form-floating mb-1 col-md-2">
+                        <input v-model="content.Address_City" class="form-control rounded-3" id="Address_City">
+                        <label for="Address_City">Город</label>
+                    </div>
+                    <div class="form-floating mb-1 col-md-3">
+                        <input v-model="content.Address_Street" id="Address_Street" class="form-control rounded-3">
+                        <label for="Address_Street">Улица</label>
+                    </div>
+                    <div class="form-floating mb-1 col-md-1">
+                        <input id="Address_House" v-model="content.Address_House" class="form-control rounded-3">
+                        <label for="Address_House">Дом</label>
+                    </div>
+                    <div class="form-floating mb-1 col-md-1">
+                        <input id="Address_Number" v-model="content.Address_Number" class="form-control rounded-3">
+                        <label for="Address_Number">Квартира</label>
+                    </div>
+                    <div class="form-floating mb-1 col-md-2">
+                        <input id="Coordinate_latitude" v-model="content.Coordinate_latitude"
+                            class="form-control rounded-3">
+                        <label for="Coordinate_latitude">Широта</label>
+                    </div>
+                    <div class="form-floating mb-1 col-md-2">
+                        <input id="Coordinate_longitude" v-model="content.Coordinate_longitude"
+                            class="form-control rounded-3">
+                        <label for="Coordinate_longitude">Долгота</label>
+                    </div>
+                    <div class="form-floating mb-1 col-md-2">
+                        <select id="type" v-model="content.type" class="form-select" aria-label="Тип объекта недвижимости">
+                            <option value="apartment" selected>Квартира</option>
+                            <option value="house">Дом</option>
+                            <option value="land">Земля</option>
+                        </select>
+                        <label for="type">Тип объекта</label>
+                    </div>
+                    <div v-if="content.type == 'apartment'" class="form-floating mb-1 col-md-2">
+                        <input id="Floor" v-model="content.Floor" class="form-control rounded-3">
+                        <label for="Floor">Этаж</label>
+                    </div>
+                    <div v-if="content.type == 'apartment'" class="form-floating mb-1 col-md-2">
+                        <input id="Rooms" v-model="content.Rooms" class="form-control rounded-3">
+                        <label for="Rooms">Количество комнат</label>
+                    </div>
+                    <div v-if="content.type == 'house'" class="form-floating mb-1 col-md-2">
+                        <input id="TotalFloors" v-model="content.TotalFloors" class="form-control rounded-3">
+                        <label for="TotalFloors">Этажность дома</label>
+                    </div>
+                    <div v-if="content.type == 'house'" class="form-floating mb-1 col-md-2">
+                        <input id="Rooms" v-model="content.Rooms" class="form-control rounded-3">
+                        <label for="Rooms">Количество комнат</label>
+                    </div>
+                    <div class="form-floating mb-1 col-md-2">
+                        <input id="TotalArea" v-model="content.TotalArea" class="form-control rounded-3">
+                        <label for="TotalArea">Площадь</label>
+                    </div>
+                    <div class="modal-footer form-group col-md-4">
+                        <button @click="cancelChanges" class="w-40 mx-2 btn btn-secondary rounded-pill">
+                            Отменить изменения
+                        </button>
+                        <button class="w-40 mx-2 btn btn-primary rounded-pill" @click="saveChanges(editId)"
+                            :disabled="!isValidForm">Сохранить изменения
+                        </button>
+                    </div>
+                </div>
+            </form>
             <form class="row g-2" onsubmit="return false;">
                 <div class="form-floating col-md-6">
                     <select id="filterType" v-model="filterType" class="form-control">
@@ -59,51 +125,59 @@
                 </thead>
                 <tbody class="table-hover">
                     <tr v-for="object in filteredObjects" :key="object.Id" :class="{ 'table-info': object.Id == editId }">
-                        <td class="table__item"><input class="table__input form-control"
-                                :disabled="this.editId !== object.Id" v-model="object.Id" /></td>
-                        <td class="table__item"><input class="table__input form-control"
-                                :disabled="this.editId !== object.Id" v-model="object.Address_City" /></td>
-                        <td class="table__item"><input class="table__input form-control"
-                                :disabled="this.editId !== object.Id" v-model="object.Address_Street" /></td>
-                        <td class="table__item"><input class="table__input form-control"
-                                :disabled="this.editId !== object.Id" v-model="object.Address_House" /></td>
-                        <td class="table__item"><input class="table__input form-control"
-                                :disabled="this.editId !== object.Id" v-model="object.Address_Number" /></td>
-                        <td class="table__item"><input class="table__input form-control"
-                                :disabled="this.editId !== object.Id" v-model="object.Coordinate_latitude" /></td>
-                        <td class="table__item"><input class="table__input form-control"
-                                :disabled="this.editId !== object.Id" v-model="object.Coordinate_longitude" /></td>
-                        <td class="table__item"><input class="table__input form-control"
-                                :disabled="this.editId !== object.Id" v-model="object.TotalArea" /></td>
-                        <td class="table__item"><input class="table__input form-control"
-                                :disabled="this.editId !== object.Id" v-if="object.Rooms" v-model="object.Rooms" /></td>
-                        <td class="table__item"><input class="table__input form-control"
-                                :disabled="this.editId !== object.Id" v-if="object.Floor" v-model="object.Floor" /></td>
-                        <td class="table__item"><input class="table__input form-control"
-                                :disabled="this.editId !== object.Id" v-if="object.TotalFloors"
-                                v-model="object.TotalFloors" /></td>
-                        <td v-if="object.Id !== editId">
-                            <div class="btn-group">
-                                <button class="btn btn-outline-primary" @click="editById(object.Id)">
-                                    Изменить
-                                </button>
-                                <button class="btn btn-outline-danger" @click="deleteModal = object.Id"
-                                    :disabled="checkId(object.Id, this.supplies)">Удалить</button>
-                            </div>
+                        <td class="table__item">
+                            <p>{{ object.Id }}</p>
                         </td>
-                        <td v-else>
-                            <div class="btn-group">
-                                <button class="btn btn-success" @click="saveChanges(object.Id)">Обновить</button>
-                                <button class="btn btn-warning" @click="cancelChanges(object.Id)">Отмена</button>
+                        <td class="table__item">
+                            <p>{{ object.Address_City }}</p>
+                        </td>
+                        <td class="table__item">
+                            <p>{{ object.Address_Street }}</p>
+                        </td>
+                        <td class="table__item">
+                            <p>{{ object.Address_House }}</p>
+                        </td>
+                        <td class="table__item">
+                            <p>{{ object.Address_Number }}</p>
+                        </td>
+                        <td class="table__item">
+                            <p>{{ object.Coordinate_latitude }}</p>
+                        </td>
+                        <td class="table__item">
+                            <p>{{ object.Coordinate_longitude }}</p>
+                        </td>
+                        <td class="table__item">
+                            <p>{{ object.TotalArea }}</p>
+                        </td>
+                        <td class="table__item">
+                            <p v-if="object.Rooms">{{ object.Rooms }}</p>
+                        </td>
+                        <td class="table__item">
+                            <p v-if="object.Floor">{{ object.Floor }}</p>
+                        </td>
+                        <td class="table__item">
+                            <p v-if="object.TotalFloors"> {{ object.TotalFloors }}</p>
+                        </td>
+                        <td>
+                            <div class="btn-group row ">
+                                <button style="width:38px; height: 38px;"
+                                    class="mx-2 rounded-circle p-2 lh-1 btn btn-outline-primary"
+                                    @click="editById(object.Id, object)">
+                                    <i class="bi-pencil-square"></i>
+                                </button>
+                                <button style="width:38px; height: 38px;" class="rounded-circle p-2 lh-1 btn btn-danger"
+                                    @click="deleteModal = object.Id" :disabled="checkId(object.Id, this.supplies)">
+                                    <i class="bi-trash"></i>
+                                </button>
                             </div>
+
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <ModalCreateObject v-if="showModal" @close="showModal = false" />
-        <ModalProofDelete v-if="deleteModal > -1" @close="deleteModal = -1" @proof="removeById(deleteModal)">выбранный объект
-            #<b>{{ deleteModal }}</b>?</ModalProofDelete>
+        <ModalProofDelete v-if="deleteModal != -1" @close="deleteModal = -1" @proof="removeById(deleteModal)">выбранный объект #<b>{{ deleteModal }}</b>?</ModalProofDelete>
     </section>
 </template>
 
@@ -134,9 +208,26 @@ export default {
             districts: districtsData,
             district: '',
             supplies: useSuppliesStore().supplies,
+            content: {
+                type: 'apartment',
+                Address_City: '',
+                Address_Street: '',
+                Address_House: '',
+                Address_Number: '',
+                Coordinate_latitude: '',
+                Coordinate_longitude: '',
+                TotalArea: '',
+                Floor: '',
+                Rooms: '',
+                TotalFloors: '',
+                Id: 0,
+            }
         }
     },
     computed: {
+        isValidForm() {
+            return true
+        },
         filteredObjects() {
             let arr = useObjectsStore().objects;
             arr = this.filterByType(arr);
@@ -158,20 +249,34 @@ export default {
         }
     },
     methods: {
-        removeById(id) {
-            useObjectsStore().removeObject(id);
+        saveChanges(id) {
+            this.editId = -1;
+            useObjectsStore().changeObject(id, this.content)
+            console.log(id, this.content)
         },
-        editById(id) {
+        cancelChanges() {
+            this.editId = -1;
+            this.content = {}
+        },
+        editById(id, obj) {
             this.editId = id;
+            this.content.type = obj.Type;
+            this.content.Address_City = obj.Address_City;
+            this.content.Address_Street = obj.Address_Street;
+            this.content.Address_House = obj.Address_House;
+            this.content.Address_Number = obj.Address_Number;
+            this.content.Coordinate_latitude = obj.Coordinate_latitude;
+            this.content.Coordinate_longitude = obj.Coordinate_longitude;
+            this.content.TotalArea = obj.TotalArea;
+            this.content.Floor = obj.Floor;
+            this.content.Rooms = obj.Rooms;
+            this.content.TotalFloors = obj.TotalFloors;
+            this.content.Id = obj.Id;
         },
         saveChanges(id) {
             this.editId = -1;
-            let index = this.filteredObjects.findIndex(obj => obj.Id === id);
-            useObjectsStore().changeObject(id, this.filteredObjects[index]);
-        },
-        cancelChanges(id) {
-            this.editId = -1;
-            useObjectsStore().fetchObjects()
+            console.log(id, this.content)
+            useObjectsStore().changeObject(id, this.content)
         },
         filterByType(arr) {
             if (this.filterType === 'apartment') {
@@ -192,7 +297,10 @@ export default {
                 }
             }
             return false;
-        }
+        },
+        removeById(id) {
+            useObjectsStore().removeObject(id);
+        },
     },
 }
 </script>
@@ -205,16 +313,6 @@ export default {
 }
 
 
-.table__input {
-    border: 1px solid black;
-
-    &:disabled {
-        border: 1px solid transparent;
-        color: black;
-        background: none;
-    }
-}
-
 .table__button {
     cursor: pointer;
     text-transform: uppercase;
@@ -225,5 +323,4 @@ export default {
     text-align: center;
     margin-right: 2px;
     background-color: rgb(169, 169, 169);
-}
-</style>
+}</style>

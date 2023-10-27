@@ -20,6 +20,10 @@
                                 </select>
                                 <label for="demand" class="required">Потребность</label>
                             </div>
+                            Рекомандации:
+                            <div class="row row-cols-5 me-2 d-flex justify-content-around">
+                                <button @click="this.Supply_Id = rec.Id" class="col btn btn-info m-1" v-for="rec in isRecomandations">{{rec.Id}}</button>
+                            </div>
                         </div>
                         <div class="modal-footer form-group">
                             <button class="w-40 mb-2 btn btn-secondary rounded-pill" @click="$emit('close')">
@@ -59,6 +63,19 @@ export default {
     isValidForm() {
         return true;
         // return Number.isInteger(this.Price) & !(!(this.Price)) & !(!(this.RealEstateId)) & !(!(this.AgentId)) & !(!(this.ClientId)) & this.Price>0
+    },
+    isRecomandations(){
+        if (this.Demand_Id !== ''){
+            let pricesDemand = [this.demands.filter(i => i.Id == this.Demand_Id)[0].MinPrice,this.demands.filter(i => i.Id == this.Demand_Id)[0].MaxPrice]
+            let areaDemand = [this.demands.filter(i => i.Id == this.Demand_Id)[0].MinArea,this.demands.filter(i => i.Id == this.Demand_Id)[0].MaxArea]
+            pricesDemand[0]==''?pricesDemand[0]=0:false; pricesDemand[1]=='' || pricesDemand[1]==null?pricesDemand[1]=999999999:false
+            areaDemand[0]==''|| areaDemand[0]==null?areaDemand[0]=0:false; areaDemand[1]=='' || areaDemand[1]==null?areaDemand[1]=999999999:false
+            console.log(areaDemand)
+            let list = this.supplies.filter(item => item.Price <= pricesDemand[1] & pricesDemand[0] <= item.Price)
+            // list = list.filter(item => item.Price <= pricesDemand[1] & pricesDemand[0] <= item.Price)
+            return list
+        }
+        return false;
     }
   },
   methods: {
