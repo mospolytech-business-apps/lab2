@@ -15,12 +15,13 @@ export const useSuppliesStore = defineStore('supplies', {
     addSupply(supply) {
       this.supplies.push(supply) 
     },
-    changeSupply(id,supply) {
-        const index = this.supplies.findIndex(obj => obj.Id === id);
-        if (index !== -1) {
-          this.supplies[index] = supply;
-        }
-      },
+    changeSupply(id, updatedSupply) {
+      const index = this.supplies.findIndex(supply => supply.Id === id);
+      if (index !== -1) {
+        const updated = {...this.supplies[index], ...updatedSupply};
+        this.supplies.splice(index, 1, updated); 
+    }
+  },
     removeSupply(id) {
         let arr = this.supplies;
         this.supplies = arr.filter(item => item.Id !== id)

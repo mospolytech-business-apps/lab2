@@ -9,6 +9,40 @@
                     Добавить предложение
                 </button>
             </div>
+            <form v-if="editId > -1" @submit.prevent="onSubmit">
+                <div class="modal-body row d-flex g-2">
+                    <div class="form-floating mb-3 col-md-4">
+                        <select id="demand" v-model="content.ClientId" class="form-select" aria-label="Клиент">
+                            <option v-for="client in clients" :key="client.Id" :value="client.Id">{{client.Id}} {{client.FirstName}} {{client.MiddleName}} {{client.LastName}}</option>
+                        </select>
+                        <label for="demand" class="required">Клиент</label>
+                    </div>
+                    <div class="form-floating mb-3 col-md-4">
+                        <select id="type" v-model="content.AgentId" class="form-select" aria-label="Объект недвижимости">
+                            <option v-for="agent in agents" :key="agent.Id" :value="agent.Id">{{agent.Id}} {{agent.FirstName}} {{agent.MiddleName}} {{agent.LastName}} (доля комиссии {{agent.DealShare}})</option>
+                        </select>
+                        <label for="type" class="required">Риэлтор</label>
+                    </div>
+                    <div class="form-floating mb-3 col-md-4">
+                        <select id="type" v-model="content.RealEstateId" class="form-select" aria-label="Объект недвижимости">
+                            <option v-for="object in objects" :key="object.Id" :value="object.Id">{{object.Id}} {{object.Address_City}} {{object.Address_Street}} дом {{object.Address_House}} кв. {{object.Address_Number}} площадь {{object.TotalArea}}</option>
+                        </select>
+                        <label for="type" class="required">Объект недвижимости</label>
+                    </div>
+                    <div class="form-floating mb-3 col-md-4">
+                        <input required id="Address_Number" v-model="content.Price" type="number" class="form-control rounded-3">
+                        <label for="Address_Number" class="required">Цена</label>
+                        <small id="Address_Number" class="form-text text-muted">Цена должна быть целым положительным числом</small>
+                    </div>
+                    <div class="mb-4 form-floating col-md-4 align-self-end d-flex justify-content-end">
+                        <button @click="cancelChanges" class="w-30 mx-2 btn btn-secondary rounded-pill">
+                            Отменить изменения
+                        </button>
+                        <button class="w-30 mx-2 btn btn-primary rounded-pill" @click="saveChanges(editId)"
+                            :disabled="!isValidForm">Сохранить изменения</button>
+                    </div>
+                </div>
+            </form>
             <table class="table table-striped shadow-sm">
                 <thead>
                     <tr>
@@ -22,28 +56,25 @@
                 </thead>
                 <tbody class="table-hover">
                     <tr v-for="supply in filteredSupplies" :key="supply.Id" :class="{ 'table-info': supply.Id == editId }">
-                        <td class="table__item"><input class="table__input form-control"
-                                :disabled="this.editId !== supply.Id" v-model="supply.Id" /></td>
-                        <td class="table__item"><input class="table__input form-control"
-                                :disabled="this.editId !== supply.Id" v-model="supply.ClientId" /></td>
-                        <td class="table__item"><input class="table__input form-control"
-                                :disabled="this.editId !== supply.Id" v-model="supply.AgentId" /></td>
-                        <td class="table__item"><input class="table__input form-control"
-                                :disabled="this.editId !== supply.Id" v-model="supply.RealEstateId" /></td>
-                        <td class="table__item"><input class="table__input form-control"
-                                :disabled="this.editId !== supply.Id" v-model="supply.Price" /></td>
-                        <td v-if="supply.Id !== editId">
-                            <div class="btn-group">
-                                <button class="btn btn-outline-primary" @click="editById(supply.Id)">
-                                    Изменить
+                        <td class="table__item"><p class="table__input"
+                            :disabled="this.editId !== supply.Id" >{{supply.Id}}</p></td>
+                            <td class="table__item"><p class="table__input"
+                                :disabled="this.editId !== supply.Id" >{{supply.ClientId}}</p></td>
+                                <td class="table__item"><p class="table__input"
+                                    :disabled="this.editId !== supply.Id" >{{supply.AgentId}}</p></td>
+                                <td class="table__item"><p class="table__input"
+                                    :disabled="this.editId !== supply.Id" >{{supply.RealEstateId}}</p></td>
+                                <td class="table__item"><p class="table__input"
+                                    :disabled="this.editId !== supply.Id" >{{supply.Price}}</p></td>
+                        <td>
+                            <div class="btn-group row " >
+                                <button style="width:38px; height: 38px;" class="mx-2 rounded-circle p-2 lh-1 btn btn-outline-primary" @click="editById(supply.Id, supply)">
+                                    <i class="bi-pencil-square"></i>
                                 </button>
-                                <button class="btn btn-outline-danger" @click="deleteModal = supply.Id">Удалить</button>
-                            </div>
-                        </td>
-                        <td v-else>
-                            <div class="btn-group">
-                                <button class="btn btn-success" @click="saveChanges(supply.Id)">Обновить</button>
-                                <button class="btn btn-warning" @click="cancelChanges(supply.Id)">Отмена</button>
+                                <button style="width:38px; height: 38px;" class="rounded-circle p-2 lh-1 btn btn-danger"
+                                    @click="deleteModal = supply.Id">
+                                    <i class="bi-trash"></i>
+                                </button>
                             </div>
                         </td>
                     </tr>
@@ -57,7 +88,9 @@
 
 <script>
 import { useSuppliesStore } from '../store/supplies';
-
+import { useObjectsStore } from '../store/objects';
+import { useClientsStore } from '../store/clients';
+import { useAgentsStore } from '../store/agents';
 import ModalCreateOffer from "../components/ModalCreateOffer.vue";
 import ModalProofDelete from './ModalProofDelete.vue';
 
@@ -74,25 +107,42 @@ export default {
             search: '',
             id: '',
             filterType: 'all',
+            objects: useObjectsStore().objects,
+            clients: useClientsStore().clients,
+            agents: useAgentsStore().agents,
+            content: {
+                AgentId: '',
+                ClientId: '',
+                RealEstateId: '',
+                Price: '',
+            }
         }
     },
     computed: {
         filteredSupplies() {
             let arr = useSuppliesStore().supplies;
             return arr
-        }
+        },
+        isValidForm() {
+            return Number.isInteger(this.content.Price) & !(!(this.content.Price)) & !(!(this.content.RealEstateId)) & !(!(this.content.AgentId)) & !(!(this.content.ClientId)) & this.content.Price>0
+        },
     },
     methods: {
         removeById(id) {
             useSuppliesStore().removeSupply(id);
         },
-        editById(id) {
+        editById(id, obj) {
             this.editId = id;
+            this.content.AgentId = obj.AgentId;
+            this.content.ClientId = obj.ClientId;
+            this.content.RealEstateId = obj.RealEstateId;
+            this.content.Price = obj.Price;
+            this.content.Id = obj.Id;
         },
         saveChanges(id) {
             this.editId = -1;
-            let index = this.filteredSupplies.findIndex(obj => obj.Id === id);
-            useSuppliesStore().changeSupply(id, this.filteredSupplies[index]);
+            useSuppliesStore().changeSupply(id, this.content)
+            console.log(id, this.content)
         },
         cancelChanges(id) {
             this.editId = -1;
@@ -107,17 +157,6 @@ export default {
     padding: 0 20px;
     max-width: 1440px;
     margin: 0 auto;
-}
-
-
-.table__input {
-    border: 1px solid black;
-
-    &:disabled {
-        border: 1px solid transparent;
-        color: black;
-        background: none;
-    }
 }
 
 .table__button {
