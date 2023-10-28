@@ -68,7 +68,8 @@ export default {
       }
       useAgentsStore().addAgent(agent);
     //   this.$emit('submit', agent);
-      console.log(agent)
+      console.log(agent);
+      this.$emit('close');
     },
 
   }

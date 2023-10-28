@@ -16,10 +16,11 @@ export const useDemandsStore = defineStore('demands', {
       this.demands.push(demand) 
     },
     changeDemand(id,demand) {
-        const index = this.demands.findIndex(obj => obj.Id === id);
-        if (index !== -1) {
-          this.demands[index] = demand;
-        }
+      const index = this.demands.findIndex(demand => demand.Id === id);
+      if (index !== -1) {
+        const updated = {...this.demands[index], ...demand};
+        this.demands.splice(index, 1, updated); 
+    }
       },
     removeDemand(id) {
         let arr = this.demands;

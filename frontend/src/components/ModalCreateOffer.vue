@@ -81,6 +81,7 @@ export default {
       }
       useSuppliesStore().addSupply(supply);
       console.log(supply)
+      this.$emit('close')
     }
   }
 }

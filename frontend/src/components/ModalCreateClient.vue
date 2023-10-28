@@ -74,6 +74,7 @@ export default {
       useClientsStore().addClient(client);
     //   this.$emit('submit', client);
       console.log(client)
+      this.$emit('close')
     }
   }
 }

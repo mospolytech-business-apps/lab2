@@ -115,6 +115,7 @@ export default {
       else if (this.type=='house') {object.TotalFloors = this.TotalFloors};
       useObjectsStore().addObject(object);
       console.log(object)
+      this.$emit('close')
     }
   }
 }

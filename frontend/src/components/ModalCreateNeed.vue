@@ -154,6 +154,7 @@ export default {
     }
       useDemandsStore().addDemand(demand);
       console.log(demand)
+      this.$emit('close')
     }
   }
 }
